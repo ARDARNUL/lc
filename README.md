@@ -21,4 +21,5 @@
 ## Guest
 - browsing the site
 - login&&register
+- R news
 - R info
