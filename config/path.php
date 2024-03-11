@@ -1,12 +1,9 @@
 <?php
 return [
-   'root' => '',
-   
-   'classes' => [
-       'app',
-       'core'
-   ],
+
+   'root' => 'pop-it-mvc',
 
    'routes' => 'routes',
+
    'views' => 'views'
 ];
