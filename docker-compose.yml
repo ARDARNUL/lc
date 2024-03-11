@@ -13,11 +13,11 @@ services:
     build:
       context: ./
       args:
-        USER: ${USER:-user}
+        USER: ${USERNAME:-user}
         PASSWORD: ${PASSWORD:-password}
     environment:
-      - APACHE_RUN_USER=${USER:-user}
-      - APACHE_RUN_GROUP=${USER:-user}
+      - APACHE_RUN_USER=${USERNAME:-user}
+      - APACHE_RUN_GROUP=${USERNAME:-user}
       - LC_CDPATH=/var/www/html
     restart: unless-stopped
     container_name: ${PROJECT_NAME:-project}-php
@@ -27,7 +27,7 @@ services:
       - ${WEB_PORT:-10000}:80
     depends_on:
       - db
-  
+
   db:
     image: mariadb:10.7
     restart: unless-stopped
@@ -35,7 +35,7 @@ services:
     environment:
       MYSQL_DATABASE: ${DB_NAME:-db}
       MYSQL_ROOT_PASSWORD: ${USER_DB_PASSWORD:-QWEasd123!}
-      MYSQL_USER: ${USER:-user}
+      MYSQL_USER: ${USERNAME:-user}
       MYSQL_PASSWORD: ${PASSWORD:-password}
     volumes:
       - db-dev:/var/lib/mysql
