@@ -34,6 +34,7 @@ services:
     container_name: ${PROJECT_NAME:-project}-db
     environment:
       MYSQL_DATABASE: ${DB_NAME:-db}
+      MYSQL_HOST: "%"
       MYSQL_ROOT_PASSWORD: ${USER_DB_PASSWORD:-QWEasd123!}
       MYSQL_USER: ${USERNAME:-user}
       MYSQL_PASSWORD: ${PASSWORD:-password}
