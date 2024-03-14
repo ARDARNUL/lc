@@ -9,6 +9,7 @@ use Src\Request;
 use Src\Auth\Auth;
 use Model\Moon;
 use Model\Monster;
+use Model\Item;
 
 class Site
 {
@@ -21,7 +22,8 @@ class Site
 
     public function Item(Request $request): string
     {
-        return new View('site.Item');
+        $Items = Item::all();
+        return (new View())->render('site.Items', ['Items' => $Items]);
     }
 
     public function Moons(Request $request): string
