@@ -6,8 +6,8 @@
 if (!app()->auth::check()):
    ?>
    <form method="post">
-       <label>Логин <input type="text" name="login"></label>
-       <label>Пароль <input type="password" name="password"></label>
-       <button>Войти</button>
+       <input class="bg-gray-400 rounded-lg text-white p-1 placeholder-white" placeholder="login" placeholder="login" type="text" name="login">
+       <input class="bg-gray-400 rounded-lg text-white p-1 placeholder-white" placeholder="password" type="password" name="password">
+       <button class="bg-gray-400 rounded-lg text-white p-1">Войти</button>
    </form>
 <?php endif;
