@@ -12,7 +12,6 @@
 <header>
 
 <div class="flex justify-end gap-4 bg-gray-400 text-gray-200 p-2">
-   <a href="<?= app()->route->getUrl('/hello') ?>">Главная</a>
        <?php
        if (!app()->auth::check()):
            ?>
@@ -21,7 +20,7 @@
        <?php
        else:
            ?>
-           <a href="<?= app()->route->getUrl('/logout') ?>">Выход (<?= app()->auth::user()->name ?>)</a>
+           <a href="<?= app()->route->getUrl('/logout') ?>">Выход <?= app()->auth::user()->name ?></a>
        <?php
        endif;
        ?>

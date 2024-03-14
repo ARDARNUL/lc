@@ -9,11 +9,32 @@ use Src\Auth\Auth;
 
 class Site
 {
-    public function index(Request $request): string
-    {
-       $posts = Post::where('id', $request->id)->get();
-       return (new View())->render('site.post', ['posts' => $posts]);
+    public function Monster(Request $request):string{
+        return new View('site.Monster');
     }
+
+    public function Item(Request $request):string{
+        return new View('site.Item');
+    }
+
+    public function Moons(Request $request):string{
+        return new View('site.Moons');
+    }
+
+    public function Forum(Request $request):string{
+        return new View('site.Forum');
+    }
+
+    public function main(Request $request):string{
+        return new View('site.main');
+        return (new View())->render('site.post', ['posts' => $posts]);
+    }
+
+    // public function index(Request $request): string
+    // {
+    //    $posts = Post::where('id', $request->id)->get();
+    //    return (new View())->render('site.post', ['posts' => $posts]);
+    // }
     
    public function hello(): string
    {
