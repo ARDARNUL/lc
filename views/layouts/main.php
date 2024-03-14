@@ -5,12 +5,14 @@
    <meta name="viewport"
          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <title>Pop it MVC</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <title>lethal Company</title>
 </head>
 <body>
 <header>
-   <nav>
-       <a href="<?= app()->route->getUrl('/hello') ?>">Главная</a>
+
+<div class="flex justify-end gap-4 bg-gray-400 text-gray-200 p-2">
+   <a href="<?= app()->route->getUrl('/hello') ?>">Главная</a>
        <?php
        if (!app()->auth::check()):
            ?>
@@ -23,11 +25,23 @@
        <?php
        endif;
        ?>
+   </div>
+
+   <nav class="flex justify-around bg-gray-400 text-gray-200 p-2">
+            <a href="<?= app()->route->getUrl('/main') ?>">Главная</a>
+
+            <a href="<?= app()->route->getUrl('/Monster') ?>">Монстры</a>
+
+            <a href="<?= app()->route->getUrl('/Item') ?>">Предметы</a>
+
+            <a href="<?= app()->route->getUrl('/Moons') ?>">Луны</a>
+            
+            <a href="<?= app()->route->getUrl('/Forum') ?>">Обсуждения</a>
    </nav>
+   
 </header>
 <main>
    <?= $content ?? '' ?>
 </main>
-
 </body>
 </html>
