@@ -28,7 +28,6 @@
    </div>
 
    <nav class="flex justify-around bg-gray-400 text-gray-200 p-2">
-            <!-- <a href="<?= app()->route->getUrl('/main') ?>">Главная</a> -->
 
             <a href="<?= app()->route->getUrl('/Monster') ?>">Монстры</a>
 

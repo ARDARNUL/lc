@@ -12,5 +12,7 @@ Route::add('GET', '/main', [Controller\Site::class, 'main']);
 Route::add('GET', '/Item', [Controller\Site::class, 'Item']);    
 Route::add('GET', '/Forum', [Controller\Site::class, 'Forum']);    
 Route::add('GET', '/Moons', [Controller\Site::class, 'Moons']);            
-Route::add('GET', '/profile', [Controller\Site::class, 'profile'])
+Route::add(['GET', 'DELETE'], '/profile', [Controller\Site::class, 'profile'])
+->middleware('auth'); 
+Route::add(['GET', 'POST'], '/addnew', [Controller\Site::class, 'addnew'])
 ->middleware('auth'); 

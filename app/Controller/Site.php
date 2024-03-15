@@ -10,9 +10,22 @@ use Src\Auth\Auth;
 use Model\Moon;
 use Model\Monster;
 use Model\Item;
+use Model\News;
+use Model\Forum;
 
 class Site
 {
+    public function addnew(Request $request): string
+    {
+        //Если просто обращение к странице, то отобразить форму
+        if ($request->method === 'GET') {
+            return new View('site.New');
+        }
+        if(News::create ([...$request->all(), "user_id" => Auth::user()["id"]])) {
+            app()->route->redirect('/Forum');
+        }
+        return (new View())->render('site.Forum');
+    }
     public function Monster(Request $request): string
     {
         $Monsters = Monster::all();
@@ -34,13 +47,20 @@ class Site
 
     public function profile(Request $request): string
     {
+        if ($request->method === 'DELETE') {
+            Visit::where("users.id", $user_id)->delete();
+            app()->route->redirect('/Monster'); 
+        }       
+
         $user = User::find(Auth::user()["id"]);
         return new View('site.profile', ['user' => $user]);
+
     }
 
     public function Forum(Request $request): string
     {
-        return new View('site.Forum');
+        $News = News::all();
+        return (new View())->render('site.Forum', ['News' => $News]);
     }
 
     public function main(Request $request): string
@@ -68,7 +88,7 @@ class Site
         }
         //Если удалось аутентифицировать пользователя, то редирект
         if (Auth::attempt($request->all())) {
-            app()->route->redirect('/main');
+            app()->route->redirect('/Monster');
         }
         //Если аутентификация не удалась, то сообщение об ошибке
         return new View('site.login', ['message' => 'Неправильные логин или пароль']);
