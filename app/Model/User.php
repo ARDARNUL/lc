@@ -17,6 +17,9 @@ class User extends Model implements IdentityInterface
         'password',
         'role_id'
     ];
+    protected $hidden = [
+        'password'
+    ];
 
     protected static function booted()
     {
@@ -24,6 +27,15 @@ class User extends Model implements IdentityInterface
             $user->password = md5($user->password);
             $user->save();
         });
+    }
+
+    public function role() {
+        return $this->belongsTo(Role::class);
+    }
+
+    // Админ?
+    public function isAdmin() {
+        return $this->role_id == 1;
     }
 
     //Выборка пользователя по первичному ключу

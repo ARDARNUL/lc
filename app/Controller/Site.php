@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Model\Comment;
 use Model\Post;
 use Model\User;
 use Src\View;
@@ -12,6 +13,8 @@ use Model\Monster;
 use Model\Item;
 use Model\News;
 use Model\Forum;
+use Model\NewComment;
+use Model\Ticket;
 
 class Site
 {
@@ -21,16 +24,66 @@ class Site
         if ($request->method === 'GET') {
             return new View('site.New');
         }
-        if(News::create ([...$request->all(), "user_id" => Auth::user()["id"]])) {
+        if (News::create([...$request->all(), "user_id" => Auth::user()["id"]])) {
             app()->route->redirect('/Forum');
         }
         return (new View())->render('site.Forum');
     }
+
+    public function comment(Request $request): string
+    {
+        if ($request->method === 'GET') {
+            return new View('site.comment');
+        }
+
+        $comment = Comment::create([...$request->all(), "user_id" => Auth::user()["id"]]);
+        
+        // Если нет коммента вернуть сообщение с ошибкой
+        if (!$comment) {
+            return (new View())->render('site.comment', [
+                'message' => 'Не удалось создать комментарий'
+            ]);
+            
+        }
+
+        // Если удалось всязать новость и комментарий, то перейти на страницу с новостями
+        if (NewComment::create([
+            "comment_id" => $comment->id,
+            "news_id" => $request->id,
+        ])) {
+            app()->route->redirect('/Forum');
+        }
+
+        return (new View())->render('site.comment');
+    }
+
+    public function ticket(Request $request): string{
+        if ($request->method === 'GET') {
+            return new View('site.ticket');
+        }
+        if (Ticket::create([...$request->all(), "user_id" => Auth::user()["id"]])) {
+            app()->route->redirect('/Monster');
+        }
+        return (new View())->render('site.ticket');
+    }
+     
     public function Monster(Request $request): string
     {
         $Monsters = Monster::all();
         return (new View())->render('site.Monster', ['Monsters' => $Monsters]);
-        
+    }
+
+    public function createMonster(Request $request): string
+    {
+        if ($request->method === 'GET') {
+            return new View('site.createMonster');
+        }
+
+        if (Monster::create($request->all())) {
+            app()->route->redirect('/Monster');
+        }
+
+        app()->route->redirect('/Monster');
     }
 
     public function Item(Request $request): string
@@ -47,14 +100,15 @@ class Site
 
     public function profile(Request $request): string
     {
-        if ($request->method === 'DELETE') {
-            Visit::where("users.id", $user_id)->delete();
-            app()->route->redirect('/Monster'); 
-        }       
-
-        $user = User::find(Auth::user()["id"]);
+        $user = Auth::user(); // User::find(Auth::user()["id"]);
         return new View('site.profile', ['user' => $user]);
+    }
 
+    public function deleteUser(Request $request): string
+    {
+        User::where("users.id", $request->get('id'))->delete();
+        app()->route->redirect('/Monster');
+        return "";
     }
 
     public function Forum(Request $request): string
@@ -66,7 +120,7 @@ class Site
     public function main(Request $request): string
     {
         return new View('site.main');
-        return (new View())->render('site.post', ['posts' => $posts]);
+        // return (new View())->render('site.post', ['posts' => $posts]);
     }
 
     // public function index(Request $request): string
@@ -97,14 +151,16 @@ class Site
     public function logout(): void
     {
         Auth::logout();
-        app()->route->redirect('/main');
+        app()->route->redirect('/Monster');
     }
-
 
     public function signup(Request $request): string
     {
-        if ($request->method === 'POST' && User::create($request->all())) {
-            app()->route->redirect('/main');
+        if ($request->method === 'POST' && User::create([
+            ...$request->all(),
+            "role_id" => 2
+        ])) {
+            app()->route->redirect('/Monster');
         }
         return new View('site.signup');
     }

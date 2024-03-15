@@ -5,15 +5,14 @@ namespace Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class News extends Model
+class Comment extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
     protected $fillable = [
+        'content',
         'user_id',
-        'name',
-        'description',
     ];
 
     public function user()
@@ -21,8 +20,8 @@ class News extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function newComments() {
-        return $this->hasMany(NewComment::class);
+    public function new()
+    {
+        return $this->benlongsTo(News::class);
     }
 }
-
