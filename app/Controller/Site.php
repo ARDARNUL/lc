@@ -111,10 +111,10 @@ class Site
         }
 
         if (Item::create($request->all())) {
-            app()->route->redirect('/Items');
+            app()->route->redirect('/Item');
         }
 
-        app()->route->redirect('/Items');
+        app()->route->redirect('/Item');
     }
 
     public function Item(Request $request): string
@@ -141,6 +141,28 @@ class Site
         app()->route->redirect('/Monster');
         return "";
     }
+
+    public function deleteMonster(Request $request): string
+    {
+        Monster::where("id", $request->get('id'))->delete();
+        app()->route->redirect('/Monster');
+        return "";
+    }
+
+    public function deleteMoons(Request $request): string
+    {
+        Moon::where("id", $request->get('id'))->delete();
+        app()->route->redirect('/Moons');
+        return "";
+    }
+
+    public function deleteItems(Request $request): string
+    {
+        Item::where("id", $request->get('id'))->delete();
+        app()->route->redirect('/Item');
+        return "";
+    }
+
 
     public function Forum(Request $request): string
     {

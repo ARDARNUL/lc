@@ -10,6 +10,5 @@
     </select>
     </label>
     <label><input class="flex bg-gray-400 rounded-lg mt-2 text-white p-1 placeholder-white" placeholder="Цена" type="text" name="price"></label>
-    
     <button class="flex bg-gray-400 rounded-lg mt-2 text-white p-1 placeholder-white">Создать</button>
 </form>

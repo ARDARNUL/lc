@@ -1,4 +1,4 @@
-<a class="bg-gray-400  rounded-lg text-white p-1"  href="<?= app()->route->getUrl('/addnew') ?>">Добавить Обсуждение</a>
+<a class="bg-gray-400 rounded-lg text-white p-1 "  href="<?= app()->route->getUrl('/addnew') ?>">Добавить Обсуждение</a>
 
 <ol>
 <?php
