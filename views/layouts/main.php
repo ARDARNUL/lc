@@ -9,45 +9,51 @@
     <title>lethal Company</title>
 </head>
 
-<body>
+<body class="flex flex-col bg-gray-600">
     <header>
+    <nav class="m-2">
+            <div class="flex justify-center">
+            <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/Monster') ?>">Монстры</a>
 
-        <div class="flex justify-end gap-4 bg-gray-400 text-gray-200 p-2">
+            <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/Moons') ?>">Луны</a>
+
+            <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/Item') ?>">Предметы</a>
+
+
+            <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/Forum') ?>">Обсуждения</a>
+            </div>
+        </nav>
+        <div class="flex justify-end m-2">
             <?php
             if (!app()->auth::check()) :
             ?>
-                <a href="<?= app()->route->getUrl('/login') ?>">Вход</a>
-                <a href="<?= app()->route->getUrl('/signup') ?>">Регистрация</a>
+                <div class="flex justify-center m-2">
+                <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/login') ?>">Вход</a>
+                <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/signup') ?>">Регистрация</a>
+                </div>
             <?php
             else :
             ?>
                 <?php
                 if (app()->auth::user()->isAdmin()) :
-                ?>
-                    <a href="<?= app()->route->getUrl('/createMonster') ?>">Добавить монстра</a>
+                ?>  <div class="flex justify-center ">
+                    <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/createMonster') ?>">Добавить монстра</a>
+                    <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/createMoons') ?>">Добавить луну</a>
+                    <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/createItems') ?>">Добавить предмет</a>
+                    </div>
                 <?php
                 endif;
                 ?>
-
-                <a href="<?= app()->route->getUrl('/ticket') ?>">Написать Тикет</a>
-                <a href="<?= app()->route->getUrl('/profile') ?>">Профиль (<?= app()->auth::user()->login ?>)
-                    <a href="<?= app()->route->getUrl('/logout') ?>">Выход</a>
+                <div class="flex justify-center ">
+                <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/ticket') ?>">Написать Тикет</a>
+                <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/allTickets') ?>">Просмотр Тикетов</a>
+                <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/profile') ?>">Профиль (<?= app()->auth::user()->login ?>)
+                <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/logout') ?>">Выход</a>
+                </div>
                 <?php
             endif;
                 ?>
         </div>
-
-        <nav class="flex justify-around bg-gray-400 text-gray-200 p-2">
-
-            <a href="<?= app()->route->getUrl('/Monster') ?>">Монстры</a>
-
-            <a href="<?= app()->route->getUrl('/Item') ?>">Предметы</a>
-
-            <a href="<?= app()->route->getUrl('/Moons') ?>">Луны</a>
-
-            <a href="<?= app()->route->getUrl('/Forum') ?>">Обсуждения</a>
-        </nav>
-
     </header>
     <main>
         <?= $content ?? '' ?>

@@ -15,9 +15,14 @@ use Model\News;
 use Model\Forum;
 use Model\NewComment;
 use Model\Ticket;
+use Model\AllTicket;
 
 class Site
-{
+{   
+    public function AllTicket(Request $request): string{
+        $Ticket = Ticket::all();
+        return (new View())->render('site.allTickets', ['Ticket' => $Ticket]);
+    }
     public function addnew(Request $request): string
     {
         //Если просто обращение к странице, то отобразить форму
@@ -84,6 +89,32 @@ class Site
         }
 
         app()->route->redirect('/Monster');
+    }
+
+    public function createMoons(Request $request): string
+    {
+        if ($request->method === 'GET') {
+            return new View('site.createMoons');
+        }
+
+        if (Moon::create($request->all())) {
+            app()->route->redirect('/Moons');
+        }
+
+        app()->route->redirect('/Moons');
+    }
+
+    public function createItems(Request $request): string
+    {
+        if ($request->method === 'GET') {
+            return new View('site.createItems');
+        }
+
+        if (Item::create($request->all())) {
+            app()->route->redirect('/Items');
+        }
+
+        app()->route->redirect('/Items');
     }
 
     public function Item(Request $request): string
