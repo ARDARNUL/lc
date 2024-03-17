@@ -5,7 +5,7 @@
    <input class="bg-gray-400 rounded-lg text-white p-1 placeholder-white" placeholder="login" type="text" name="login">
    <input class="bg-gray-400 rounded-lg text-white p-1 placeholder-white" placeholder="password" type="password" name="password">   
    <label class="bg-gray-400 rounded-lg text-white p-1 placeholder-white">
-        Пикча <input type="file" name="avatar" accept="image/*">
+        Аватар <input type="file" name="avatar" accept="image/*">
     </label>
    <button class="bg-gray-400 rounded-lg text-white p-1" >Зарегистрироваться</button>
 </form>

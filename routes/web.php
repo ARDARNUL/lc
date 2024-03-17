@@ -21,7 +21,7 @@ Route::add('GET', '/deleteUser', [Controller\Site::class, 'deleteUser'])->middle
 Route::add('GET', '/deleteMonster', [Controller\Site::class, 'deleteMonster'])->middleware('auth', 'admin');
 Route::add('GET', '/deleteMoons', [Controller\Site::class, 'deleteMoons'])->middleware('auth', 'admin');
 Route::add('GET', '/deleteItems', [Controller\Site::class, 'deleteItems'])->middleware('auth', 'admin');
-Route::add('GET', '/deleteNews', [Controller\Site::class, 'deleteNews'])->middleware('auth');
+Route::add('GET', '/deleteNews', [Controller\Site::class, 'deleteNews'])->middleware('auth', 'admin');
 
 Route::add(['GET', 'PATCH'], '/redactMonster', [Controller\Site::class, 'redactMonster'])->middleware('auth', 'admin');
 

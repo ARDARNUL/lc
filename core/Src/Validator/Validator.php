@@ -1,10 +1,26 @@
 <?php
 
+
+declare(strict_types=1);
+
 namespace Src\Validator;
 
-class Validator
+use Src\Validator\AbstractValidator;
+class Validator extends AbstractValidator
 {
-   //Разрешенные валидаторы
+    protected string $message = 'Field :field to short';
+
+
+
+    public function rule(): bool
+    {
+        $count = strlen($this->value ?? "");
+        $min = (int)($this->args[0] ?? 8);
+        $max = (int)($this->args[1] ?? 255);
+
+        return !($count < $min || $count > $max);
+    }
+
    private array $validators = [];
    //Итоговые ошибки
    private array $errors = [];
@@ -21,18 +37,8 @@ class Validator
        $this->fields = $fields;
        $this->rules = $rules;
        $this->messages = $messages;
-       $this->validate();
    }
-
-   //Перебираем список всех валидируемых полей и для
-   //каждого поля вызываем метод validateField()
-   private function validate(): void
-   {
-       foreach ($this->rules as $fieldName => $fieldValidators) {
-           $this->validateField($fieldName, $fieldValidators);
-       }
-   }
-
+   
    //Валидация отдельного поля
    private function validateField(string $fieldName, array $fieldValidators): void
    {

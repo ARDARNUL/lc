@@ -17,9 +17,12 @@ use Model\NewComment;
 use Model\Ticket;
 use Model\AllTicket;
 use Src\Validator\Validator;
+use Src\Validator\AbstractValidator;
 
 class Site
 {   
+    private $upload_dir = __DIR__ . './images/';
+
     public function AllTicket(Request $request): string{
         $Ticket = Ticket::all();
         return (new View())->render('site.allTickets', ['Ticket' => $Ticket]);
@@ -222,25 +225,67 @@ class Site
 
     public function signup(Request $request): string
 {
-   if ($request->method === 'POST') {
+    if ($request->method == 'POST') {
 
-       $validator = new Validator($request->all(), [
-           'login' => ['required', 'unique:users,login'],
-           'password' => ['required']
-       ], [
-           'required' => 'Поле :field пусто',
-           'unique' => 'Поле :field должно быть уникально'
-       ]);
+        $validator = new Validator($request->all(), [
+            'login' => ['required', 'length:1,255'],
+            'password' => ['required', 'length:1,255'],
+        ], [
+            'required' => 'Поле :field обязательное',
+        ]);
 
-       if($validator->fails()){
-           return new View('site.signup',
-               ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
-       }
+        if ($validator->fails()) {
+            $view = new View('site.signup', ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+            $view->render();
 
-       if (User::create($request->all())) {
-           app()->route->redirect('/Monster');
-       }
-   }
+            return "";
+        }
+
+        // check avatar
+        if (isset($_FILES["avatar"])) {
+            $avatar = $_FILES["avatar"];
+            if (!$avatar) {
+                $view = new View('site.signup', ['message' => 'Не выбрано изображение']);
+                $view->render();
+
+                return "";
+            }
+
+            if (!$avatar['size']) {
+                $view = new View('site.signup', ['message' => 'Слишком большое изображение']);
+                $view->render();
+
+                return "";
+            }
+
+            $getMime = explode('.', $avatar);
+            $mime = strtolower(end($getMime));
+            $types = array('jpg', 'png', 'jpeg', 'webp');
+
+
+            if (!in_array($mime, $types)) {
+                $view = new View('site.signup', ['message' => 'Не поддерживаемый тип изображения']);
+                $view->render();
+
+                return "";
+            }
+
+            mt_rand(0, 10000) . $avatar;
+            copy($avatar['tmp_name'], "$this->upload_dir");
+        }
+
+
+        $User = User::create([
+            ...$request->all(),
+        ]);
+
+        if (!$User) {
+            $view = new View('site.signup', ['message' => 'failed']);
+        }
+
+        app()->route->redirect("/profile");
+    }
+
    return new View('site.signup');
 }
 
@@ -252,7 +297,7 @@ class Site
             $search = strtoupper($search);
 
             $User = User::whereRaw(
-                "UPPER(login) LIKE '% . $search .'%"
+                "UPPER(login) LIKE '%" . $search . "%'"
             )->get();
         } else {
                 $User = User::all();
