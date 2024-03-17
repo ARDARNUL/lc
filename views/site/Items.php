@@ -13,7 +13,6 @@
         <input type=\"hidden\" name=\"id\" value=\"$Items[id]\">
         <button>Удалить Информацию</button>
         </form>";
-        echo "</div>";
     echo "</div>";
     }
 ?>

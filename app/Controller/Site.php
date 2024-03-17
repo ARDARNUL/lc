@@ -16,6 +16,7 @@ use Model\Forum;
 use Model\NewComment;
 use Model\Ticket;
 use Model\AllTicket;
+use Src\Validator\Validator;
 
 class Site
 {   
@@ -109,11 +110,10 @@ class Site
         if ($request->method === 'GET') {
             return new View('site.createItems');
         }
-
+        
         if (Item::create($request->all())) {
             app()->route->redirect('/Item');
         }
-
         app()->route->redirect('/Item');
     }
 
@@ -163,6 +163,19 @@ class Site
         return "";
     }
 
+    public function deleteNews(Request $request): string
+    {
+        News::where("id", $request->get('id'))->delete();
+        app()->route->redirect('/Forum');
+        return "";
+    }
+
+    public function redactMonster(Request $request): string
+    {   
+        Monster::where("id", $request->get('id'))->update($request->all());
+        app()->route->redirect('/Monster');
+        return "";
+    }
 
     public function Forum(Request $request): string
     {
@@ -208,13 +221,48 @@ class Site
     }
 
     public function signup(Request $request): string
+{
+   if ($request->method === 'POST') {
+
+       $validator = new Validator($request->all(), [
+           'login' => ['required', 'unique:users,login'],
+           'password' => ['required']
+       ], [
+           'required' => 'Поле :field пусто',
+           'unique' => 'Поле :field должно быть уникально'
+       ]);
+
+       if($validator->fails()){
+           return new View('site.signup',
+               ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+       }
+
+       if (User::create($request->all())) {
+           app()->route->redirect('/Monster');
+       }
+   }
+   return new View('site.signup');
+}
+
+    public function User(Request $request)
     {
-        if ($request->method === 'POST' && User::create([
-            ...$request->all(),
-            "role_id" => 2
-        ])) {
-            app()->route->redirect('/Monster');
+        $search = $request->get('search');
+
+        if ($search) {
+            $search = strtoupper($search);
+
+            $User = User::whereRaw(
+                "UPPER(login) LIKE '% . $search .'%"
+            )->get();
+        } else {
+                $User = User::all();
         }
-        return new View('site.signup');
+
+
+
+        return (new View())->render('site.User', ['User' => $User]);
+        
+
     }
+
 }

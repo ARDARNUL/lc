@@ -19,6 +19,7 @@
 
             <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/Item') ?>">Предметы</a>
 
+            <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/User') ?>">Найти пользователя</a>
 
             <a class="flex justify-end gap-4 bg-gray-400 text-gray-200 rounded-lg m-2 p-2" href="<?= app()->route->getUrl('/Forum') ?>">Обсуждения</a>
             </div>

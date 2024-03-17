@@ -2,9 +2,10 @@
 
 <ol>
 <?php
-    
+    $deleteNews = app() -> route -> getUrl('/deleteNews');
     foreach ($News as $News) {
     $username = $News -> user['login'] ?? 'Юзер удален';
+    $user_id = $News -> user['id'];
     
     $newComments = $News->newComments;
 
@@ -12,6 +13,14 @@
     echo "<p>$username</p><br>";
     echo "<p>$News[name]</p><br>";
     echo "<p>$News[description]</p> <br>";
+
+    if($user_id == $user_id){
+    echo "<form method=\"DELETE\" action=\"$deleteNews\" class=\" w-max bg-gray-400 rounded-lg text-white p-1 m-2\">
+    <input type=\"hidden\" name=\"id\" value=\"$News[id]\">
+    <button>Удалить Обсуждение</button>
+    </form>";
+    }
+        
     echo "<a class=\"bg-gray-400  rounded-lg text-blue-700 p-1\"  href=\"/comment?id=$News[id]\">Написать комментировать</a>";
 
     echo '<p class="text-xl flex flex-col">Комментарии</p>';
