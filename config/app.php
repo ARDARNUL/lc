@@ -20,7 +20,7 @@ return [
    'validators' => [
       'required' => \Validators\RequireValidator::class,
       'unique' => \Validators\UniqueValidator::class,
-      'length' => \Validators\MinMaxLengthValidator::class,
+      'length' => Validators\MinMaxLengthValidator::class,
       'futureDatetime' => \Validators\FutureDatetimeValidator::class
   ]
 
