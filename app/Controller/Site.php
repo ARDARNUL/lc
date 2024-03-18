@@ -21,7 +21,7 @@ use Src\Validator\AbstractValidator;
 
 class Site
 {   
-    private $upload_dir = __DIR__ . './images/';
+    private $upload_dir = __DIR__ . '/../../public/images/';
 
     public function AllTicket(Request $request): string{
         $Ticket = Ticket::all();
@@ -174,7 +174,7 @@ class Site
     }
 
     public function redactMonster(Request $request): string
-    {   
+    { 
         Monster::where("id", $request->get('id'))->update($request->all());
         app()->route->redirect('/Monster');
         return "";
@@ -244,43 +244,44 @@ class Site
         // check avatar
         if (isset($_FILES["avatar"])) {
             $avatar = $_FILES["avatar"];
-            if (!$avatar) {
-                $view = new View('site.signup', ['message' => 'Не выбрано изображение']);
+            if (!$avatar['name']) {
+                $view = new View('site.signout', ['message' => 'Не выбрано изображение']);
                 $view->render();
 
                 return "";
             }
 
             if (!$avatar['size']) {
-                $view = new View('site.signup', ['message' => 'Слишком большое изображение']);
+                $view = new View('site.signout', ['message' => 'Слишком большое изображение']);
                 $view->render();
 
                 return "";
             }
 
-            $getMime = explode('.', $avatar);
+            $getMime = explode('.', $avatar['name']);
             $mime = strtolower(end($getMime));
             $types = array('jpg', 'png', 'jpeg', 'webp');
 
 
             if (!in_array($mime, $types)) {
-                $view = new View('site.signup', ['message' => 'Не поддерживаемый тип изображения']);
+                $view = new View('site.signout', ['message' => 'Не поддерживаемый тип изображения']);
                 $view->render();
 
                 return "";
             }
 
-            mt_rand(0, 10000) . $avatar;
-            copy($avatar['tmp_name'], "$this->upload_dir");
+            $name = mt_rand(0, 10000) . $avatar['name'];
+            copy($avatar['tmp_name'], "$this->upload_dir/$name");
         }
 
 
         $User = User::create([
             ...$request->all(),
+            'avatar' => "/images/$name"
         ]);
 
         if (!$User) {
-            $view = new View('site.signup', ['message' => 'failed']);
+            $view = new View('site.signout', ['message' => 'failed']);
         }
 
         app()->route->redirect("/profile");
