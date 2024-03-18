@@ -23,7 +23,11 @@ Route::add('GET', '/deleteMoons', [Controller\Site::class, 'deleteMoons'])->midd
 Route::add('GET', '/deleteItems', [Controller\Site::class, 'deleteItems'])->middleware('auth', 'admin');
 Route::add('GET', '/deleteNews', [Controller\Site::class, 'deleteNews'])->middleware('auth', 'admin');
 
-Route::add(['GET', 'PATCH'], '/redactMonster', [Controller\Site::class, 'redactMonster'])->middleware('auth', 'admin');
+Route::add(['GET', 'POST'], '/redactMonster', [Controller\Site::class, 'redactMonster'])->middleware('auth', 'admin');
+Route::add(['GET', 'POST'], '/redactMoon', [Controller\Site::class, 'redactMoon'])->middleware('auth', 'admin');
+Route::add(['GET', 'POST'], '/redactItem', [Controller\Site::class, 'redactItem'])->middleware('auth', 'admin');
+Route::add(['GET', 'POST'], '/redactProfile', [Controller\Site::class, 'redactProfile'])->middleware('auth', 'admin');
+
 
 Route::add(['GET', 'POST'], '/ticket', [Controller\Site::class, 'ticket'])->middleware('auth');
 Route::add(['GET', 'POST'], '/comment', [Controller\Site::class, 'comment'])->middleware('auth');

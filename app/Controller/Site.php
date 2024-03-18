@@ -175,11 +175,52 @@ class Site
 
     public function redactMonster(Request $request): string
     { 
-        Monster::where("id", $request->get('id'))->update($request->all());
-        app()->route->redirect('/Monster');
-        return "";
+        if ($request->method === 'POST') {
+        Monster::where("id", $request->get('id'))->update([
+            "name" => $request->get('name'),
+            "description" => $request->get('description'),
+            "healt" => $request->get('healt'),
+            "stunnable" => $request->get('stunnable')
+        ]);
+    }    
+    return (new View())->render('site.redactMonster');
     }
 
+    public function redactMoon(Request $request): string
+    { 
+        if ($request->method === 'POST') {
+        Moon::where("id", $request->get('id'))->update([
+            "name" => $request->get('name'),
+            "description" => $request->get('description'),
+            "tier_id" => $request->get('tier_id'),
+            "cost" => $request->get('cost'),
+            "viable_weather" => $request->get('viable_weather')
+        ]);
+    }    
+    return (new View())->render('site.redactMoon');
+    }
+    public function redactItem(Request $request): string
+    { 
+        if ($request->method === 'POST') {
+        Item::where("id", $request->get('id'))->update([
+            "name" => $request->get('name'),
+            "description" => $request->get('description'),
+            "price" => $request->get('price'),
+            "kind_id" => $request->get('kind_id')
+        ]);
+    }    
+    return (new View())->render('site.redactItem');
+    }
+
+    public function redactProfile(Request $request): string
+    { 
+        if ($request->method === 'POST') {
+        User::where("id", $request->get('id'))->update([
+            "login" => $request->get('login'),
+        ]);
+    }    
+    return (new View())->render('site.redactProfile');
+    }
     public function Forum(Request $request): string
     {
         $News = News::all();
@@ -235,27 +276,18 @@ class Site
         ]);
 
         if ($validator->fails()) {
-            $view = new View('site.signup', ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
-            $view->render();
-
-            return "";
+            return new View('site.signup', ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
         }
 
         // check avatar
         if (isset($_FILES["avatar"])) {
             $avatar = $_FILES["avatar"];
             if (!$avatar['name']) {
-                $view = new View('site.signout', ['message' => 'Не выбрано изображение']);
-                $view->render();
-
-                return "";
+                return new View('site.signup', ['message' => 'Не выбрано изображение']);
             }
 
             if (!$avatar['size']) {
-                $view = new View('site.signout', ['message' => 'Слишком большое изображение']);
-                $view->render();
-
-                return "";
+                return new View('site.signup', ['message' => 'Слишком большое изображение']);
             }
 
             $getMime = explode('.', $avatar['name']);
@@ -264,10 +296,7 @@ class Site
 
 
             if (!in_array($mime, $types)) {
-                $view = new View('site.signout', ['message' => 'Не поддерживаемый тип изображения']);
-                $view->render();
-
-                return "";
+                return new View('site.signup', ['message' => 'Не поддерживаемый тип изображения']);
             }
 
             $name = mt_rand(0, 10000) . $avatar['name'];
@@ -281,7 +310,7 @@ class Site
         ]);
 
         if (!$User) {
-            $view = new View('site.signout', ['message' => 'failed']);
+            return new View('site.signup', ['message' => 'failed']);
         }
 
         app()->route->redirect("/profile");
