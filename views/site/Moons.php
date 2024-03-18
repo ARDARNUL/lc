@@ -12,7 +12,7 @@
     echo "<p>Цена планеты: $Moons[cost]</p> <br>";
     echo "<p>Возможные погодные условия: $Moons[viable_weather]</p><br>";
 
-    echo "<form method=\"DELETE\" action=\"$deleteMoon\" class=\" w-max bg-gray-400 rounded-lg text-white p-1 m-2\">
+    echo "<form method=\"DELETE\" action=\"$deleteMoon\" class=\" w-max bg-gray-600 rounded-lg text-white p-1 m-2\">
         <input type=\"hidden\" name=\"id\" value=\"$Moons[id]\">
         <button>Удалить Информацию</button>
         </form>";

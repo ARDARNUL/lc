@@ -10,18 +10,18 @@
     $newComments = $News->newComments;
 
     echo '<div class="bg-gray-400 rounded-lg text-white p-1 m-2">';
-    echo "<p>$username</p><br>";
-    echo "<p>$News[name]</p><br>";
-    echo "<p>$News[description]</p> <br>";
+    echo "<p class=\" bg-gray-600 rounded-lg p-1 m-1\">login: $username</p><br>";
+    echo "<p class=\" bg-gray-600 rounded-lg p-1 m-1\">Заголовок: $News[name]</p><br>";
+    echo "<p class=\" bg-gray-600 rounded-lg p-1 m-1\">Описание: $News[description]</p> <br>";
 
     if($user_id == $user_id){
-    echo "<form method=\"DELETE\" action=\"$deleteNews\" class=\" w-max bg-gray-400 rounded-lg text-white p-1 m-2\">
+    echo "<form method=\"DELETE\" action=\"$deleteNews\" class=\" w-max bg-gray-600 rounded-lg text-white p-1 m-2\">
     <input type=\"hidden\" name=\"id\" value=\"$News[id]\">
     <button>Удалить Обсуждение</button>
     </form>";
     }
         
-    echo "<a class=\"bg-gray-400  rounded-lg text-blue-700 p-1\"  href=\"/comment?id=$News[id]\">Написать комментировать</a>";
+    echo "<a class=\"bg-gray-600 text-white rounded-lg text-blue-700 p-1\"  href=\"/comment?id=$News[id]\">Написать комментировать</a>";
 
     echo '<p class="text-xl flex flex-col">Комментарии</p>';
     foreach ($newComments as $newComment) {
