@@ -13,7 +13,8 @@
         "php": "^7.4 | ^8.0",
         "illuminate/events": "10.x-dev",
         "illuminate/database": "^10.38",
-        "nikic/fast-route": "^2.0@dev"
+        "nikic/fast-route": "^2.0@dev",
+        "ardarnul/search": "dev-master"
     },
     "autoload": {
         "psr-4": {

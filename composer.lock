@@ -4,8 +4,49 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee8fc55949a76cb4eb80547a658024f9",
+    "content-hash": "f1b1e979f8c03ac9e5af4f8f6062992e",
     "packages": [
+        {
+            "name": "ardarnul/search",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ARDARNUL/search.git",
+                "reference": "5dcf8b8d9171568f01f9d7e6dc2f4749897aa9af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ARDARNUL/search/zipball/5dcf8b8d9171568f01f9d7e6dc2f4749897aa9af",
+                "reference": "5dcf8b8d9171568f01f9d7e6dc2f4749897aa9af",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 | ^8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Search\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "mit"
+            ],
+            "authors": [
+                {
+                    "name": "adarnul",
+                    "email": "adarnul.global@gmail.com"
+                }
+            ],
+            "description": "search for lc",
+            "support": {
+                "issues": "https://github.com/ARDARNUL/search/issues",
+                "source": "https://github.com/ARDARNUL/search/tree/master"
+            },
+            "time": "2024-03-22T14:08:14+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.12.1",
@@ -285,12 +326,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
-                "reference": "36651526fa6bb5445ffc6d51899d80291f8e0486"
+                "reference": "f9589f1063a449111dcaa1d68285b507d9483a95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/36651526fa6bb5445ffc6d51899d80291f8e0486",
-                "reference": "36651526fa6bb5445ffc6d51899d80291f8e0486",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/f9589f1063a449111dcaa1d68285b507d9483a95",
+                "reference": "f9589f1063a449111dcaa1d68285b507d9483a95",
                 "shasum": ""
             },
             "require": {
@@ -332,7 +373,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2024-03-10T15:34:39+00:00"
+            "time": "2024-03-20T20:09:13+00:00"
         },
         {
             "name": "illuminate/conditionable",
@@ -1581,7 +1622,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "illuminate/events": 20,
-        "nikic/fast-route": 20
+        "nikic/fast-route": 20,
+        "ardarnul/search": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
@@ -1589,5 +1631,5 @@
         "php": "^7.4 | ^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.2.0"
 }

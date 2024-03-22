@@ -18,6 +18,7 @@ use Model\Ticket;
 use Model\AllTicket;
 use Src\Validator\Validator;
 use Src\Validator\AbstractValidator;
+use Src\search;
 
 class Site
 {   
@@ -332,8 +333,6 @@ class Site
         } else {
                 $User = User::all();
         }
-
-
 
         return (new View())->render('site.User', ['User' => $User]);
         
