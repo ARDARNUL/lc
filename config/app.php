@@ -12,9 +12,9 @@ return [
    ],
    
    'routeAppMiddleware' => [
-      'csrf' => \Middlewares\CSRFMiddleware::class,
-      'trim' => \Middlewares\TrimMiddleware::class,
-      'specialChars' => \Middlewares\SpecialCharsMiddleware::class,
+      'csrf' => Middlewares\CSRFMiddleware::class,
+      'trim' => Middlewares\TrimMiddleware::class,
+      'specialChars' =>  Middlewares\SpecialCharsMiddleware::class,
    ],
 
    'validators' => [

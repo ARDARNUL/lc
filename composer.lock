@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1b1e979f8c03ac9e5af4f8f6062992e",
+    "content-hash": "927eddb4cfad1049c01eebb69af156ff",
     "packages": [
         {
-            "name": "ardarnul/search",
+            "name": "ardarnul/middleware",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ARDARNUL/search.git",
-                "reference": "5dcf8b8d9171568f01f9d7e6dc2f4749897aa9af"
+                "url": "https://github.com/ARDARNUL/middleware.git",
+                "reference": "72bf20d0129dc4e4ff943c5d9c627c309c96a447"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ARDARNUL/search/zipball/5dcf8b8d9171568f01f9d7e6dc2f4749897aa9af",
-                "reference": "5dcf8b8d9171568f01f9d7e6dc2f4749897aa9af",
+                "url": "https://api.github.com/repos/ARDARNUL/middleware/zipball/72bf20d0129dc4e4ff943c5d9c627c309c96a447",
+                "reference": "72bf20d0129dc4e4ff943c5d9c627c309c96a447",
                 "shasum": ""
             },
             "require": {
@@ -27,7 +27,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Search\\": "src/"
+                    "Middlewares\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -42,10 +42,10 @@
             ],
             "description": "search for lc",
             "support": {
-                "issues": "https://github.com/ARDARNUL/search/issues",
-                "source": "https://github.com/ARDARNUL/search/tree/master"
+                "issues": "https://github.com/ARDARNUL/middleware/issues",
+                "source": "https://github.com/ARDARNUL/middleware/tree/master"
             },
-            "time": "2024-03-22T14:08:14+00:00"
+            "time": "2024-03-22T16:32:44+00:00"
         },
         {
             "name": "brick/math",
@@ -1623,7 +1623,7 @@
     "stability-flags": {
         "illuminate/events": 20,
         "nikic/fast-route": 20,
-        "ardarnul/search": 20
+        "ardarnul/middleware": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

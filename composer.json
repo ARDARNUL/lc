@@ -14,7 +14,7 @@
         "illuminate/events": "10.x-dev",
         "illuminate/database": "^10.38",
         "nikic/fast-route": "^2.0@dev",
-        "ardarnul/search": "dev-master"
+        "ardarnul/middleware": "dev-master"
     },
     "autoload": {
         "psr-4": {

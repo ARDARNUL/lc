@@ -18,7 +18,7 @@ use Model\Ticket;
 use Model\AllTicket;
 use Src\Validator\Validator;
 use Src\Validator\AbstractValidator;
-use Src\search;
+use search;
 
 class Site
 {   
