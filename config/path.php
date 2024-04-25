@@ -1,9 +1,9 @@
 <?php
 return [
 
-   'root' => '',
+    'baseUrl' => '',
 
-   'routes' => 'routes',
+    'routes' => 'routes',
 
-   'views' => 'views'
+    'views' => 'views'
 ];

@@ -7,7 +7,7 @@
 
 ## Admin
 - browsing the site
-- CRUD news ??
+- CRUD news 
 - CRUD info
 - sign out
 - Del and Ban User
@@ -15,7 +15,7 @@
 
 ## User
 - browsing the site
-- CRD news ??
+- CRD news 
 - offer info
 - sign out
 - сommenting news
