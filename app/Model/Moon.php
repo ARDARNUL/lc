@@ -12,14 +12,20 @@ class Moon extends Model
     public $timestamps = false;
     protected $fillable = [
         'name',
-        'description',
+        'avatar',
         'tier_id',
         'cost',
-        'viable_weather'
+        'number_of_items',
+        'weather'
     ];
 
     public function tier()
     {
         return $this->belongsTo(Tier::class);
+    }
+
+    public function Monster()
+    {
+        return $this->hasMany(Monster::class);
     }
 }

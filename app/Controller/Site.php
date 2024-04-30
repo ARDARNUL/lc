@@ -4,7 +4,6 @@ namespace Controller;
 
 use Model\Comment;
 use Model\Item;
-use Model\Monster;
 use Model\Moon;
 use Model\NewComment;
 use Model\News;
@@ -72,25 +71,6 @@ class Site
         return (new View())->render('site.ticket');
     }
 
-    public function Monster(Request $request): string
-    {
-        $Monsters = Monster::all();
-        return (new View())->render('site.Monster', ['Monsters' => $Monsters]);
-    }
-
-    public function createMonster(Request $request): string
-    {
-        if ($request->method === 'GET') {
-            return new View('site.createMonster');
-        }
-
-        if (Monster::create($request->all())) {
-            app()->route->redirect('/Monster');
-        }
-
-        app()->route->redirect('/Monster');
-    }
-
     public function createMoons(Request $request): string
     {
         if ($request->method === 'GET') {
@@ -141,13 +121,6 @@ class Site
         return "";
     }
 
-    public function deleteMonster(Request $request): string
-    {
-        Monster::where("id", $request->get('id'))->delete();
-        app()->route->redirect('/Monster');
-        return "";
-    }
-
     public function deleteMoons(Request $request): string
     {
         Moon::where("id", $request->get('id'))->delete();
@@ -167,19 +140,6 @@ class Site
         News::where("id", $request->get('id'))->delete();
         app()->route->redirect('/Forum');
         return "";
-    }
-
-    public function redactMonster(Request $request): string
-    {
-        if ($request->method === 'POST') {
-        Monster::where("id", $request->get('id'))->update([
-            "name" => $request->get('name'),
-            "description" => $request->get('description'),
-            "healt" => $request->get('healt'),
-            "stunnable" => $request->get('stunnable')
-        ]);
-    }
-    return (new View())->render('site.redactMonster');
     }
 
     public function redactMoon(Request $request): string
@@ -229,42 +189,32 @@ class Site
         // return (new View())->render('site.post', ['posts' => $posts]);
     }
 
-    // public function index(Request $request): string
-    // 
-    //    $posts = Post::where('id', $request->id)->get();
-    //    return (new View())->render('site.post', ['posts' => $posts]);
-    // 
+
 
     public function hello(): string
     {
         return new View('site.hello', ['message' => 'hello working']);
     }
 
-    public function login(Request $request): void
+    public function login(Request $request): string
     {
-        $validator = new Validator($request->all(), [
-            'login' => ['required'],
-            'password' => ['required'],
-        ], [
-            'required' => 'Поле :field обязательное',
-        ]);
         //Если удалось аутентифицировать пользователя, то редирект
         if (Auth::attempt($request->all())) {
             (new View())->json(['token' => session_create_id()], 200);
         }
 
         (new View())->json(['message' => 'Неправильные логин или пароль'], 400);
-
     }
 
     public function logout(): void
     {
-        Auth::logout();
-        app()->route->redirect('/Monster');
+        (Auth::logout());
+        (new View())->json(['message' => 'Выход успешен'], 200);
     }
 
     public function signup(Request $request): void
     {
+        
         $validator = new Validator($request->all(), [
             'login' => ['required'],
             'password' => ['required'],
@@ -277,12 +227,45 @@ class Site
             return;
         }
 
-        if (Auth::attempt($request->all())) {
+        // check avatar
+        if (isset($_FILES["avatar"])) {
+            $avatar = $_FILES["avatar"];
+            if (!$avatar['name']) {
+                (new View())->json(['message' => 'Выберите файл'], 400);
+            }
+
+            if (!$avatar['size']) {
+                (new View())->json(['message' => 'файл слишком большой'], 400);
+            }
+
+            $getMime = explode('.', $avatar['name']);
+            $mime = strtolower(end($getMime));
+            $types = array('jpg', 'png', 'jpeg', 'webp');
+
+
+            if (!in_array($mime, $types)) {
+                (new View())->json(['Неправильный тип изобрвжения вот разрешёные: jpg, png, jpeg, webp'], 400);
+            }
+
+            $name = mt_rand(0, 10000) . $avatar['name'];
+            copy($avatar['tmp_name'], "$this->upload_dir/$name");
+        }
+
+
+        $User = User::create([
+            ...$request->all(),
+            'avatar' => "/images/$name"
+        ]);
+
+        if (User::Create($request->all())) {
             (new View())->json(['token' => session_create_id()], 200);
         }
 
         (new View())->json(['message' => 'Неправильные логин или пароль'], 400);
     }
+
+
+
 
     public function User(Request $request)
     {

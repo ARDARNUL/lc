@@ -12,9 +12,20 @@ class Monster extends Model
     public $timestamps = false;
     protected $fillable = [
         'name',
-        'description',
-        'img',
+        'avatar',
         'healt',
-        'stunnable'
+        'quantity',
+        'stun_id',
+        'moons_id'
     ];
+
+    public function moons()
+    {
+        return $this->belongsTo(Moon::class);
+    }
+
+    public function stun()
+    {
+        return $this->belongsTo(Stun::class);
+    }
 }

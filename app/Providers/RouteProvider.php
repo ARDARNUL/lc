@@ -16,7 +16,7 @@ class RouteProvider extends AbstractProvider
     {
         $this->app->bind('route', Route::single()->setPrefix($this->app->settings->getBasePath()));
 
-        if ($this->checkPrefix('/web')) {
+        // if ($this->checkPrefix('/web')) {
             $this->app->settings->removeAppMiddleware('csrf');
             $this->app->settings->removeAppMiddleware('specialChars');
 
@@ -24,12 +24,12 @@ class RouteProvider extends AbstractProvider
                 require_once __DIR__ . '/../..' . $this->app->settings->getRoutePath() . '/web.php';
             });
             return;
-        }
+        // }
 
-        //Удаляем обработку json данных
-        $this->app->settings->removeAppMiddleware('json');
-        //Загружаем маршруты из стандартного файла
-        require_once __DIR__ . '/../..' . $this->app->settings->getRoutePath() . '/web.php';
+        // //Удаляем обработку json данных
+        // $this->app->settings->removeAppMiddleware('json');
+        // //Загружаем маршруты из стандартного файла
+        // require_once __DIR__ . '/../..' . $this->app->settings->getRoutePath() . '/web.php';
     }
 
     private function getUri(): string
