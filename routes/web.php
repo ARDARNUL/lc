@@ -36,6 +36,4 @@ Route::add(['GET', 'POST'], '/createMonster', [Controller\Monsters::class, 'crea
 Route::add(['GET', 'POST'], '/createMoons', [Controller\Site::class, 'createMoons'])->middleware('auth', 'admin');
 Route::add(['GET', 'POST'], '/createItems', [Controller\Site::class, 'createItems'])->middleware('auth', 'admin');
 
-Route::add('GET', '/allTickets', [Controller\Site::class, 'AllTicket']);
-
 Route::add('GET', '/User', [Controller\Site::class, 'User'])->middleware('auth');

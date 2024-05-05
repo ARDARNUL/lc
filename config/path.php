@@ -5,5 +5,6 @@ return [
 
     'routes' => 'routes',
 
-    'views' => 'views'
+    'views' => 'views',
+    
 ];

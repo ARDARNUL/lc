@@ -3,11 +3,9 @@
 namespace Controller;
 
 use Model\Comment;
-use Model\Item;
 use Model\Moon;
 use Model\NewComment;
 use Model\News;
-use Model\Ticket;
 use Model\User;
 use Src\Auth\Auth;
 use Src\Request;
@@ -84,24 +82,6 @@ class Site
         app()->route->redirect('/Moons');
     }
 
-    public function createItems(Request $request): string
-    {
-        if ($request->method === 'GET') {
-            return new View('site.createItems');
-        }
-
-        if (Item::create($request->all())) {
-            app()->route->redirect('/Item');
-        }
-        app()->route->redirect('/Item');
-    }
-
-    public function Item(Request $request): string
-    {
-        $Items = Item::all();
-        (new View())->json($Item->toArray());
-    }
-
     public function Moons(Request $request): string
     {
         $Moons = Moon::all();
@@ -128,13 +108,6 @@ class Site
         return "";
     }
 
-    public function deleteItems(Request $request): string
-    {
-        Item::where("id", $request->get('id'))->delete();
-        app()->route->redirect('/Item');
-        return "";
-    }
-
     public function deleteNews(Request $request): string
     {
         News::where("id", $request->get('id'))->delete();
@@ -155,19 +128,7 @@ class Site
     }
     return (new View())->render('site.redactMoon');
     }
-    public function redactItem(Request $request): string
-    {
-        if ($request->method === 'POST') {
-        Item::where("id", $request->get('id'))->update([
-            "name" => $request->get('name'),
-            "description" => $request->get('description'),
-            "price" => $request->get('price'),
-            "kind_id" => $request->get('kind_id')
-        ]);
-    }
-    return (new View())->render('site.redactItem');
-    }
-
+    
     public function redactProfile(Request $request): string
     {
         if ($request->method === 'POST') {
@@ -181,19 +142,6 @@ class Site
     {
         $News = News::all();
         return (new View())->render('site.Forum', ['News' => $News]);
-    }
-
-    public function main(Request $request): string
-    {
-        return new View('site.main');
-        // return (new View())->render('site.post', ['posts' => $posts]);
-    }
-
-
-
-    public function hello(): string
-    {
-        return new View('site.hello', ['message' => 'hello working']);
     }
 
     public function login(Request $request): string
@@ -213,56 +161,44 @@ class Site
     }
 
     public function signup(Request $request): void
-    {
-        
+{
+    if ($request->method == 'POST') {
+
         $validator = new Validator($request->all(), [
-            'login' => ['required'],
-            'password' => ['required'],
+            'login' => ['required', 'length:1,255'],
+            'password' => ['required', 'length:1,255'],
         ], [
             'required' => 'Поле :field обязательное',
         ]);
 
         if ($validator->fails()) {
             (new View())->json($validator->errors(), 400);
-            return;
-        }
-
-        // check avatar
-        if (isset($_FILES["avatar"])) {
-            $avatar = $_FILES["avatar"];
-            if (!$avatar['name']) {
-                (new View())->json(['message' => 'Выберите файл'], 400);
-            }
-
-            if (!$avatar['size']) {
-                (new View())->json(['message' => 'файл слишком большой'], 400);
-            }
-
-            $getMime = explode('.', $avatar['name']);
-            $mime = strtolower(end($getMime));
-            $types = array('jpg', 'png', 'jpeg', 'webp');
-
-
-            if (!in_array($mime, $types)) {
-                (new View())->json(['Неправильный тип изобрвжения вот разрешёные: jpg, png, jpeg, webp'], 400);
-            }
-
-            $name = mt_rand(0, 10000) . $avatar['name'];
-            copy($avatar['tmp_name'], "$this->upload_dir/$name");
         }
 
 
-        $User = User::create([
-            ...$request->all(),
-            'avatar' => "/images/$name"
-        ]);
+        $login = $request->get('login');
+        // $request->getMethod() == "POST"
 
-        if (User::Create($request->all())) {
+        $login = strtoupper($login);
+
+        if ($login == User::whereRaw( "UPPER(login) LIKE '%" . $login . "%'") ) {
+
+            (new View())->json(['message' => 'Такой пользователь уже создан)'], 400);
+
+        } else {
+            $User = User::create([
+                ...$request->all(),
+            ]);
             (new View())->json(['token' => session_create_id()], 200);
         }
 
-        (new View())->json(['message' => 'Неправильные логин или пароль'], 400);
+
+        if (!$User) {
+            (new View())->json(['message' => 'Не вышло)'], 400);
+        }
+
     }
+}
 
 
 

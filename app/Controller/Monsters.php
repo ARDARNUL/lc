@@ -37,7 +37,7 @@ class Monsters
             }
 
             $getMime = explode('.', $avatar['name']);
-            $mime = strtolower(end($getMime));
+            $mime = strtolower(end($getMime));  
             $types = array('jpg', 'png', 'jpeg', 'webp');
 
 

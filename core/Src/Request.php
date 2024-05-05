@@ -44,4 +44,16 @@ class Request
        }
        throw new Error('Accessing a non-existent property');
    }
+
+   public function getMethod()
+   {
+       return $_SERVER['REQUEST_METHOD'];
+   }
+
+   function response($content, $status = 200, $headers = [])
+{
+    $response = new Response($content, $status, $headers);
+
+    return $response;
+}
 }
