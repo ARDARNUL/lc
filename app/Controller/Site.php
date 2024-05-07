@@ -16,59 +16,6 @@ class Site
 {
     private $upload_dir = __DIR__ . '/../../public/images/';
 
-    public function AllTicket(Request $request): string{
-        $Ticket = Ticket::all();
-        return (new View())->render('site.allTickets', ['Ticket' => $Ticket]);
-    }
-    public function addnew(Request $request): string
-    {
-        //Если просто обращение к странице, то отобразить форму
-        if ($request->method === 'GET') {
-            return new View('site.New');
-        }
-        if (News::create([...$request->all(), "user_id" => Auth::user()["id"]])) {
-            app()->route->redirect('/Forum');
-        }
-        return (new View())->render('site.Forum');
-    }
-
-    public function comment(Request $request): string
-    {
-        if ($request->method === 'GET') {
-            return new View('site.comment');
-        }
-
-        $comment = Comment::create([...$request->all(), "user_id" => Auth::user()["id"]]);
-
-        // Если нет коммента вернуть сообщение с ошибкой
-        if (!$comment) {
-            return (new View())->render('site.comment', [
-                'message' => 'Не удалось создать комментарий'
-            ]);
-
-        }
-
-        // Если удалось всязать новость и комментарий, то перейти на страницу с новостями
-        if (NewComment::create([
-            "comment_id" => $comment->id,
-            "news_id" => $request->id,
-        ])) {
-            app()->route->redirect('/Forum');
-        }
-
-        return (new View())->render('site.comment');
-    }
-
-    public function ticket(Request $request): string{
-        if ($request->method === 'GET') {
-            return new View('site.ticket');
-        }
-        if (Ticket::create([...$request->all(), "user_id" => Auth::user()["id"]])) {
-            app()->route->redirect('/Monster');
-        }
-        return (new View())->render('site.ticket');
-    }
-
     public function createMoons(Request $request): string
     {
         if ($request->method === 'GET') {
@@ -90,8 +37,8 @@ class Site
 
     public function profile(Request $request): string
     {
-        $user = Auth::user(); // User::find(Auth::user()["id"]);
-        return new View('site.profile', ['user' => $user]);
+        $user = Auth::user(); 
+        (new View())->json($user->toArray());
     }
 
     public function deleteUser(Request $request): string
@@ -105,13 +52,6 @@ class Site
     {
         Moon::where("id", $request->get('id'))->delete();
         app()->route->redirect('/Moons');
-        return "";
-    }
-
-    public function deleteNews(Request $request): string
-    {
-        News::where("id", $request->get('id'))->delete();
-        app()->route->redirect('/Forum');
         return "";
     }
 
@@ -138,13 +78,9 @@ class Site
     }
     return (new View())->render('site.redactProfile');
     }
-    public function Forum(Request $request): string
-    {
-        $News = News::all();
-        return (new View())->render('site.Forum', ['News' => $News]);
-    }
+    
 
-    public function login(Request $request): string
+    public function login(Request $request): void
     {
         //Если удалось аутентифицировать пользователя, то редирект
         if (Auth::attempt($request->all())) {
@@ -161,47 +97,42 @@ class Site
     }
 
     public function signup(Request $request): void
-{
-    if ($request->method == 'POST') {
-
-        $validator = new Validator($request->all(), [
-            'login' => ['required', 'length:1,255'],
-            'password' => ['required', 'length:1,255'],
-        ], [
-            'required' => 'Поле :field обязательное',
-        ]);
-
-        if ($validator->fails()) {
-            (new View())->json($validator->errors(), 400);
-        }
-
-
-        $login = $request->get('login');
-        // $request->getMethod() == "POST"
-
-        $login = strtoupper($login);
-
-        if ($login == User::whereRaw( "UPPER(login) LIKE '%" . $login . "%'") ) {
-
-            (new View())->json(['message' => 'Такой пользователь уже создан)'], 400);
-
-        } else {
-            $User = User::create([
-                ...$request->all(),
+    {       
+        if ($request->method == 'POST') {
+    
+            $validator = new Validator($request->all(), [
+                'login' => ['required', 'length:1,255'],
+                'password' => ['required', 'length:1,255'],
+            ], [
+                'required' => 'Поле :field обязательное',
             ]);
-            (new View())->json(['token' => session_create_id()], 200);
+    
+            if ($validator->fails()) {
+                (new View())->json($validator->errors(), 400);
+            }
+    
+            $login = $request->get('login');
+    
+            $login = strtoupper($login);
+    
+            if (User::whereRaw( "UPPER(login) = ?", $login )->exists() ) {
+    
+                (new View())->json(['message' => 'Такой пользователь уже создан)'], 400);
+    
+            } else {
+                $User = User::create([
+                    ...$request->all(),
+                ]);
+                (new View())->json(['token' => session_create_id()], 200);
+            }
+    
+    
+            if (!$User) {+
+                (new View())->json(['message' => 'Не вышло)'], 400);
+            }
+    
         }
-
-
-        if (!$User) {
-            (new View())->json(['message' => 'Не вышло)'], 400);
-        }
-
     }
-}
-
-
-
 
     public function User(Request $request)
     {

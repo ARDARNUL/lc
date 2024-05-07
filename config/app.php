@@ -16,7 +16,7 @@ return [
        'json' => \Middlewares\JSONMiddleware::class,
        'bearer' => \Middlewares\BearerMiddleware::class,
       'specialChars' =>  Middlewares\SpecialCharsMiddleware::class,
-      'Cors' => \Middlewares\Cors::class
+      'сors' => \Middlewares\CorsMiddlewares::class
    ],
 
     'providers' => [
