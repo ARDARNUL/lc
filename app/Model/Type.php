@@ -5,14 +5,14 @@ namespace Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class kind extends Model
+class Type extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
 
-    public function items()
+    public function item()
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsTo(Item::class);
     }
 }

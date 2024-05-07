@@ -19,21 +19,17 @@ class Items
 
     public function createItems(Request $request): void
     {
-        if ($request->method === 'GET') {
-            return new View('site.createItems');
-        }
-
         if (Item::create($request->all())) {
-            app()->route->redirect('/Item');
+            (new View())->json(['message' => 'Предмет создан успешно'], 200);
         }
-        app()->route->redirect('/Item');
+        else{
+            (new View())->json(['message' => 'Не удалось создать предмет'], 400);
+        }
     }
 
     public function deleteItems(Request $request): void
     {
         Item::where("id", $request->get('id'))->delete();
-        app()->route->redirect('/Item');
-        return "";
     }
 
     public function redactItem(Request $request): void
@@ -41,12 +37,15 @@ class Items
         if ($request->method === 'POST') {
         Item::where("id", $request->get('id'))->update([
             "name" => $request->get('name'),
-            "description" => $request->get('description'),
-            "price" => $request->get('price'),
-            "kind_id" => $request->get('kind_id')
+            "avatar" => $request->get('avatar'),
+            "type_id " => $request->get('type_id'),
+            "cost" => $request->get('cost'),
+            "weight " => $request->get('weight '),
+            "presence_of_battery_id" => $request->get('presence_of_battery_id'),
+            "conducts_electricity_id" => $request->get('conducts_electricity_id'),
         ]);
     }
-    return (new View())->render('site.redactItem');
+
     }
 
 

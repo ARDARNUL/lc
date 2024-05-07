@@ -2,10 +2,7 @@
 
 namespace Controller;
 
-use Model\Comment;
 use Model\Moon;
-use Model\NewComment;
-use Model\News;
 use Model\User;
 use Src\Auth\Auth;
 use Src\Request;
