@@ -8,6 +8,7 @@ Route::add('GET', '/logout', [Controller\Site::class, 'logout']);
 Route::add(['DELETE', 'GET'], '/profile', [Controller\Site::class, 'profile'])->middleware('auth');
 
 Route::add('GET', '/viewMonster', [Controller\Monsters::class, 'viewMonster']);
+Route::add('GET', '/viewTerminal', [Controller\Terminals::class, 'viewTerminal']);
 Route::add('GET', '/main', [Controller\Site::class, 'main']);
 Route::add('GET', '/Item', [Controller\Site::class, 'Item']);
 Route::add('GET', '/Forum', [Controller\Forums::class, 'Forum']);
