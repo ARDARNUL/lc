@@ -11,10 +11,10 @@ use Src\Auth\Auth;
 class Items
 {
 
-    public function Item(Request $request): void
+    public function viewItem(Request $request): void
     {
         $Items = Item::all();
-        (new View())->json($Item->toArray());
+        (new View())->json($Items->toArray());
     }
 
     public function createItems(Request $request): void
@@ -38,9 +38,9 @@ class Items
         Item::where("id", $request->get('id'))->update([
             "name" => $request->get('name'),
             "avatar" => $request->get('avatar'),
-            "type_id " => $request->get('type_id'),
+            "type_id" => $request->get('type_id'),
             "cost" => $request->get('cost'),
-            "weight " => $request->get('weight '),
+            "weight" => $request->get('weight'),
             "presence_of_battery_id" => $request->get('presence_of_battery_id'),
             "conducts_electricity_id" => $request->get('conducts_electricity_id'),
         ]);

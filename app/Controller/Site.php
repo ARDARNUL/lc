@@ -13,67 +13,31 @@ class Site
 {
     private $upload_dir = __DIR__ . '/../../public/images/';
 
-    public function createMoons(Request $request): string
+    public function profile(Request $request): void
     {
-        if ($request->method === 'GET') {
-            return new View('site.createMoons');
-        }
+        $users = Auth::user(); 
+        (new View())->json($users->toArray());
 
-        if (Moon::create($request->all())) {
-            app()->route->redirect('/Moons');
-        }
-
-        app()->route->redirect('/Moons');
     }
 
-    public function Moons(Request $request): string
-    {
-        $Moons = Moon::all();
-        return (new View())->render('site.Moons', ['Moons' => $Moons]);
-    }
-
-    public function profile(Request $request): string
-    {
-        $user = Auth::user(); 
-        (new View())->json($user->toArray());
-    }
-
-    public function deleteUser(Request $request): string
+    public function deleteUser(Request $request): void
     {
         User::where("users.id", $request->get('id'))->delete();
         app()->route->redirect('/Monster');
-        return "";
-    }
-
-    public function deleteMoons(Request $request): string
-    {
-        Moon::where("id", $request->get('id'))->delete();
-        app()->route->redirect('/Moons');
-        return "";
-    }
-
-    public function redactMoon(Request $request): string
-    {
-        if ($request->method === 'POST') {
-        Moon::where("id", $request->get('id'))->update([
-            "name" => $request->get('name'),
-            "description" => $request->get('description'),
-            "tier_id" => $request->get('tier_id'),
-            "cost" => $request->get('cost'),
-            "viable_weather" => $request->get('viable_weather')
-        ]);
-    }
-    return (new View())->render('site.redactMoon');
     }
     
-    public function redactProfile(Request $request): string
+    public function redactProfile(Request $request): void
     {
         if ($request->method === 'POST') {
-        User::where("id", $request->get('id'))->update([
+        $users = User::where("id", $request->get('id'))->update([
             "login" => $request->get('login'),
         ]);
+        (new View())->json($users->toArray());
     }
-    return (new View())->render('site.redactProfile');
+    else{
+        (new View())->json(['message' => 'Не вышло)'], 400);
+    }
+        
     }
     
 
@@ -124,7 +88,7 @@ class Site
             }
     
     
-            if (!$User) {+
+            if (!$User) {
                 (new View())->json(['message' => 'Не вышло)'], 400);
             }
     
