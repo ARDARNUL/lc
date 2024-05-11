@@ -4,6 +4,7 @@ namespace Controller;
 
 use Model\Moon;
 use Model\User;
+use Model\Tier;
 use Src\Auth\Auth;
 use Src\Request;
 use Src\Validator\Validator;
@@ -15,6 +16,13 @@ class Moons
     {
         $Moons = Moon::all();
         (new View())->json($Moons->toArray());
+    }
+
+    
+    public function tiers(Request $request): void
+    {
+        $Tiers = Tier::all();
+        (new View())->json($Tiers->toArray());
     }
 
     public function createMoons(Request $request): void
@@ -33,17 +41,16 @@ class Moons
 
     public function redactMoon(Request $request): void
     {
-                Moon::where("id", $request->get('id'))->update([
-                "name" => $request->get('name'),
-                "tier_id" => $request->get('tier_id'),
-                "cost" => $request->get('cost'),
-                "number_of_items" => $request->get('number_of_items'),
-                "weather" => $request->get('weather')
-            ]);
+        Moon::where("id", $request->get('id'))->update([
+        "name" => $request->get('name'),
+        "tier_id" => $request->get('tier_id'),
+        "cost" => $request->get('cost'),
+        "number_of_items" => $request->get('number_of_items'),
+        "weather" => $request->get('weather')
+        ]);
 
-            $Moons = Moon::all();
-            (new View())->json($Moons->toArray());
+        $Moons = Moon::all(); 
+        (new View())->json($Moons->toArray());
         
     }
-
 }

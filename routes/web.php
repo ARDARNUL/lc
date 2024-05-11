@@ -9,6 +9,7 @@ Route::add(['DELETE', 'GET'], '/profile', [Controller\Site::class, 'profile'])->
 
 Route::add('GET', '/viewMonster', [Controller\Monsters::class, 'viewMonster']);
 Route::add('GET', '/viewTerminal', [Controller\Terminals::class, 'viewTerminal']);
+Route::add('GET', '/tiers', [Controller\Moons::class, 'tiers']);
 Route::add('GET', '/main', [Controller\Site::class, 'main']);
 Route::add('GET', '/viewItem', [Controller\Items::class, 'viewItem']);
 Route::add('GET', '/Forum', [Controller\Forums::class, 'Forum']);
