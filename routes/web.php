@@ -3,7 +3,7 @@
 use Src\Route;
 
 Route::add('POST', '/signup', [Controller\Site::class, 'signup']);
-Route::add('POST', '/login', [Controller\Site::class, 'login']);
+Route::add(['GET', 'POST'], '/login', [Controller\Site::class, 'login']);
 Route::add('GET', '/logout', [Controller\Site::class, 'logout']);
 Route::add(['DELETE', 'GET'], '/profile', [Controller\Site::class, 'profile'])->middleware('auth');
 

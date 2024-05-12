@@ -15,8 +15,8 @@ class Site
 
     public function profile(Request $request): void
     {
-        $users = Auth::user(); 
-        (new View())->json($users->toArray());
+        $Users = Auth::user(); 
+        (new View())->json($Users->toArray());
 
     }
 
@@ -29,10 +29,10 @@ class Site
     public function redactProfile(Request $request): void
     {
         if ($request->method === 'POST') {
-        $users = User::where("id", $request->get('id'))->update([
+        $Users = User::where("id", $request->get('id'))->update([
             "login" => $request->get('login'),
         ]);
-        (new View())->json($users->toArray());
+        (new View())->json($Users->toArray());
     }
     else{
         (new View())->json(['message' => 'Не вышло)'], 400);
@@ -45,7 +45,9 @@ class Site
     {
         //Если удалось аутентифицировать пользователя, то редирект
         if (Auth::attempt($request->all())) {
-            (new View())->json(['token' => session_create_id()], 200);
+            $Users = Auth::user(); 
+            (new View())->json(["user" => $Users->toArray(),'token' => session_create_id()], 200);
+            
         }
 
         (new View())->json(['message' => 'Неправильные логин или пароль'], 400);
@@ -84,7 +86,9 @@ class Site
                 $User = User::create([
                     ...$request->all(),
                 ]);
-                (new View())->json(['token' => session_create_id()], 200);
+                $Users = Auth::user(); 
+                (new View())->json(["user" => $Users->toArray(),'token' => session_create_id()], 200);
+                
             }
     
     
