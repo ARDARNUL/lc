@@ -14,6 +14,7 @@ class Monster extends Model
         'name',
         'avatar',
         'healt',
+        'damage',
         'quantity',
         'stun_id',
         'moons_id'

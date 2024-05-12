@@ -39,6 +39,7 @@ class Monsters
             "name" => $request->get('name'),
             "avatar" => $request->get('avatar'),
             "healt" => $request->get('healt'),
+            "damage" => $request->get('damage'),
             "quantity" => $request->get('quantity'),
             "stun_id" => $request->get('stun_id'),
             "moons_id" => $request->get('moons_id')

@@ -17,14 +17,14 @@ class Items
         (new View())->json($Items->toArray());
     }
 
-    public function createItems(Request $request): void
+    public function createItem(Request $request): void
     {
         if ($Items = Item::create($request->all())) {
             (new View())->json($Items->toArray());
         }
     }
 
-    public function deleteItems(Request $request): void
+    public function deleteItem(Request $request): void
     {
         Item::where("id", $request->get('id'))->delete();
         $Items = Item::all();

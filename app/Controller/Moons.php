@@ -18,14 +18,14 @@ class Moons
         (new View())->json($Moons->toArray());
     }
 
-    public function createMoons(Request $request): void
+    public function createMoon(Request $request): void
     {
         if ($Moons = Moon::create($request->all())) {
             (new View())->json($Moons->toArray());
         }
     }
 
-    public function deleteMoons(Request $request): void
+    public function deleteMoon(Request $request): void
     {
         Moon::where("id", $request->get('id'))->delete();
         $Moons = Moon::all();

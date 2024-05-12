@@ -17,28 +17,29 @@ class Scrabs
         (new View())->json($Scrabs->toArray());
     }
 
-    public function createScrabs(Request $request): void
+    public function createScrab(Request $request): void
     {
         if ($Scrabs = Scrab::create($request->all())) {
             (new View())->json($Scrabs->toArray());
         }
     }
 
-    public function deleteScrabs(Request $request): void
+    public function deleteScrab(Request $request): void
     {
         Scrab::where("id", $request->get('id'))->delete();
         $Scrabs = Scrab::all();
         (new View())->json($Scrabs->toArray());
     }
 
-    public function redactMoon(Request $request): void
+    public function redactScrab(Request $request): void
     {
         Scrab::where("id", $request->get('id'))->update([
         "name" => $request->get('name'),
-        "Scrab_id" => $request->get('Scrab_id'),    
-        "cost" => $request->get('cost'),
-        "number_of_items" => $request->get('number_of_items'),
-        "weather" => $request->get('weather')
+        "min_cost" => $request->get('min_cost'),    
+        "max_cost" => $request->get('max_cost'),
+        "weight" => $request->get('weight'),
+        "conducts_electricity_id" => $request->get('conducts_electricity_id'),
+        "two_handed_id" => $request->get('two_handed_id')
         ]);
 
         $Scrabs = Scrab::all(); 
