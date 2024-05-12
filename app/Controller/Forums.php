@@ -14,7 +14,7 @@ use Src\View;
 class Forums
 {
     
-    public function Forum(Request $request): void
+    public function viewForum(Request $request): void
     {
         $News = News::all();
         (new View())->json($News->toArray());

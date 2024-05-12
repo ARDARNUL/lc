@@ -12,9 +12,7 @@ Route::add('GET', '/viewTerminal', [Controller\Terminals::class, 'viewTerminal']
 Route::add('GET', '/viewMoon', [Controller\Moons::class, 'viewMoon']);
 Route::add('GET', '/viewItem', [Controller\Items::class, 'viewItem']);
 Route::add('GET', '/viewScrab', [Controller\Scrabs::class, 'viewScrab']);
-Route::add('GET', '/tiers', [Controller\Moons::class, 'tiers']);
-Route::add('GET', '/main', [Controller\Site::class, 'main']);
-Route::add('GET', '/Forum', [Controller\Forums::class, 'Forum']);
+Route::add('GET', '/viewForum', [Controller\Forums::class, 'viewForum']);
 
 Route::add(['GET', 'POST'], '/addnew', [Controller\Site::class, 'addnew'])
 ->middleware('auth');
@@ -38,4 +36,4 @@ Route::add(['GET', 'POST'], '/createScrab', [Controller\Scrabs::class, 'createSc
 Route::add(['GET', 'POST'], '/createMoon', [Controller\Moons::class, 'createMoon'])->middleware('auth', 'admin');
 Route::add(['GET', 'POST'], '/createItem', [Controller\Items::class, 'createItem'])->middleware('auth', 'admin');
 
-Route::add('GET', '/User', [Controller\Site::class, 'User'])->middleware('auth');
+Route::add('POST', '/searchMonster', [Controller\Monsters::class, 'searchMonster'])->middleware('auth');

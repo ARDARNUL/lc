@@ -48,4 +48,20 @@ class Monsters
         $Monsters = Monster::all();
         (new View())->json($Monsters->toArray());
     }
+
+    public function searchMonster(Request $request): void
+    {
+        $search = $request->get('search');
+
+        if ($search) {
+            $search = strtoupper($search);
+
+            $Monsters = Monster::whereRaw(
+                "UPPER(name) LIKE '%" . $search . "%'"
+            )->get();
+        } else {
+                $Monsters = Monster::all();
+        }
+        (new View())->json($Monsters->toArray());
+    }
 }

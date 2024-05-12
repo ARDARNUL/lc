@@ -94,20 +94,4 @@ class Site
     
         }
     }
-
-    public function User(Request $request)
-    {
-        $search = $request->get('search');
-
-        if ($search) {
-            $search = strtoupper($search);
-
-            $User = User::whereRaw(
-                "UPPER(login) LIKE '%" . $search . "%'"
-            )->get();
-        } else {
-                $User = User::all();
-        }
-        return (new View())->render('site.User', ['User' => $User]);
-    }
 }
