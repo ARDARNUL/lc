@@ -14,13 +14,13 @@ use Src\View;
 class Forums
 {
     
-    public function Forum(Request $request): string
+    public function Forum(Request $request): void
     {
         $News = News::all();
         (new View())->json($News->toArray());
     }
 
-    public function addnew(Request $request): string
+    public function addnew(Request $request): void
     {
         if($News = News::create([...$request->all(), "user_id" => Auth::user()["id"]])){
             (new View())->json($News->toArray());  
@@ -30,7 +30,7 @@ class Forums
         }
     }
 
-    public function comment(Request $request): string
+    public function comment(Request $request): void
     {
         $comment = Comment::create([...$request->all(), "user_id" => Auth::user()["id"]]);
 
@@ -48,7 +48,7 @@ class Forums
 
     }
 
-    public function deleteNews(Request $request): string
+    public function deleteNews(Request $request): void
     {
         News::where("id", $request->get('id'))->delete();
         $News = News::all();

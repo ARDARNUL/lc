@@ -19,22 +19,20 @@ class Items
 
     public function createItems(Request $request): void
     {
-        if (Item::create($request->all())) {
-            (new View())->json(['message' => 'Предмет создан успешно'], 200);
-        }
-        else{
-            (new View())->json(['message' => 'Не удалось создать предмет'], 400);
+        if ($Items = Item::create($request->all())) {
+            (new View())->json($Items->toArray());
         }
     }
 
     public function deleteItems(Request $request): void
     {
         Item::where("id", $request->get('id'))->delete();
+        $Items = Item::all();
+        (new View())->json($Items->toArray());
     }
 
     public function redactItem(Request $request): void
     {
-        if ($request->method === 'POST') {
         Item::where("id", $request->get('id'))->update([
             "name" => $request->get('name'),
             "avatar" => $request->get('avatar'),
@@ -44,8 +42,8 @@ class Items
             "presence_of_battery_id" => $request->get('presence_of_battery_id'),
             "conducts_electricity_id" => $request->get('conducts_electricity_id'),
         ]);
-    }
-
+        $Items = Item::all(); 
+        (new View())->json($Items->toArray());
     }
 
 

@@ -35,7 +35,7 @@ class Scrabs
     {
         Scrab::where("id", $request->get('id'))->update([
         "name" => $request->get('name'),
-        "Scrab_id" => $request->get('Scrab_id'),
+        "Scrab_id" => $request->get('Scrab_id'),    
         "cost" => $request->get('cost'),
         "number_of_items" => $request->get('number_of_items'),
         "weather" => $request->get('weather')

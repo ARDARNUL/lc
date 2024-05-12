@@ -18,13 +18,6 @@ class Moons
         (new View())->json($Moons->toArray());
     }
 
-    
-    public function tiers(Request $request): void
-    {
-        $Tiers = Tier::all();
-        (new View())->json($Tiers->toArray());
-    }
-
     public function createMoons(Request $request): void
     {
         if ($Moons = Moon::create($request->all())) {
