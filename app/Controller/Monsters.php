@@ -28,7 +28,10 @@ class Monsters
 
     public function deleteMonster(Request $request): void
     {
-        Monster::where("id", $request->get('id'))->delete();
+        $id = $request->id();
+    
+        Monster::where("id", $id)->delete();
+    
         $Monsters = Monster::all();
         (new View())->json($Monsters->toArray());
     }
@@ -64,4 +67,5 @@ class Monsters
         }
         (new View())->json($Monsters->toArray());
     }
+
 }

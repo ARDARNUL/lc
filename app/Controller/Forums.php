@@ -20,17 +20,18 @@ class Forums
         (new View())->json($News->toArray());
     }
 
-    public function addnew(Request $request): void
+    public function addNew(Request $request): void
     {
         if($News = News::create([...$request->all(), "user_id" => Auth::user()["id"]])){
-            (new View())->json($News->toArray());  
+            $Users = Auth::user(); 
+            (new View())->json(["user" => $Users->toArray(), "News" => $News->toArray()], 200);
         }
         else{
             (new View())->json(['message' => 'Коментарий не создался'], 400);
         }
     }
 
-    public function comment(Request $request): void
+    public function createComment(Request $request): void
     {
         $comment = Comment::create([...$request->all(), "user_id" => Auth::user()["id"]]);
 
@@ -39,8 +40,7 @@ class Forums
             "comment_id" => $comment->id,
             "news_id" => $request->id,
         ])) {
-            $News = News::all();
-            (new View())->json($News->toArray());
+            (new View())->json($comment->toArray());
         }
         else{
             (new View())->json(['message' => 'Коментарий не создался'], 400);

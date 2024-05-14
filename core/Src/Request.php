@@ -18,7 +18,7 @@ class Request
    }
 
    public function all(): array
-   {
+   {   
        return $this->body + $this->files();
    }
 
@@ -55,5 +55,12 @@ class Request
     $response = new Response($content, $status, $headers);
 
     return $response;
+}
+
+public function id(): int
+{
+    $request = new Request();
+
+    return $request->get('id');
 }
 }

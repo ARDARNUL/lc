@@ -13,4 +13,11 @@ class Terminals
         $Terminals = Terminal::all();
         (new View())->json($Terminals->toArray());
     }
+
+    public function createTerminal(Request $request): void
+    {
+        if ($Terminals = Terminal::create($request->all())) {
+            (new View())->json($Terminals->toArray());
+        }
+    }
 }
