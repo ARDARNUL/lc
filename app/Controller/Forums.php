@@ -21,8 +21,7 @@ class Forums
     }
 
     public function addNew(Request $request): void
-    {      var_dump($request);
-        // var_dump(Auth::user());
+    {     
         if($News = News::create([...$request->all(), "user_id" => Auth::user()["id"]])){
             $Users = Auth::user(); 
             (new View())->json(["user" => $Users->toArray(), "News" => $News->toArray()], 200);
