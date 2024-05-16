@@ -23,7 +23,6 @@ class Site
     public function deleteUser(Request $request): void
     {
         User::where("users.id", $request->get('id'))->delete();
-        app()->route->redirect('/Monster');
     }
     
     public function redactProfile(Request $request): void

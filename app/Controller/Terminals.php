@@ -20,4 +20,22 @@ class Terminals
             (new View())->json($Terminals->toArray());
         }
     }
+
+    public function deleteTerminal(Request $request): void
+    {
+        Terminal::where("id", $request->get('id'))->delete();
+        $Terminals = Terminal::all();
+        (new View())->json($Terminals->toArray());
+    }
+
+    public function redactTerminal(Request $request): void
+    {
+        Terminal::where("id", $request->get('id'))->update([
+            "title" => $request->get('title'),
+            "description" => $request->get('description')
+        ]);
+        
+        $Terminals = Terminal::all();
+        (new View())->json($Terminals->toArray());
+    }
 }
