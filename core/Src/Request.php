@@ -57,10 +57,4 @@ class Request
     return $response;
 }
 
-public function id(): int
-{
-    $request = new Request();
-
-    return $request->get('id');
-}
 }

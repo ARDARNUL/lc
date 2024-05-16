@@ -19,13 +19,13 @@ Route::add(['GET', 'POST'], '/addNew', [Controller\Forums::class, 'addNew'])
 ->middleware('auth');
 
 Route::add(['DELETE', 'POST'],  '/deleteUser', [Controller\Site::class, 'deleteUser'])->middleware('auth');
-Route::add(['DELETE', 'POST'],  '/deleteMonster/{id}', [Controller\Monsters::class, 'deleteMonster'])->middleware('auth', 'admin');
+Route::add(['DELETE', 'POST'],  '/deleteMonster', [Controller\Monsters::class, 'deleteMonster'])->middleware('auth', 'admin');
 Route::add(['DELETE', 'POST'], '/deleteMoon', [Controller\Moons::class, 'deleteMoon'])->middleware('auth', 'admin');
 Route::add(['DELETE', 'POST'],  '/deleteItem', [Controller\Items::class, 'deleteItem'])->middleware('auth', 'admin');
 Route::add(['DELETE', 'POST'],  '/deleteScrab', [Controller\Scrabs::class, 'deleteScrab'])->middleware('auth', 'admin');
 Route::add(['DELETE', 'POST'],  '/deleteNews', [Controller\Forums::class, 'deleteNews'])->middleware('auth', 'admin');
 
-Route::add(['GET', 'POST'], '/redactMonster', [Controller\Monsters::class, 'redactMonster'])->middleware('auth', 'admin');
+Route::add(['PUT', 'POST'], '/redactMonster', [Controller\Monsters::class, 'redactMonster'])->middleware('auth', 'admin');
 Route::add(['PUT', 'POST'], '/redactMoon', [Controller\Moons::class, 'redactMoon'])->middleware('auth', 'admin');
 Route::add(['GET', 'POST'], '/redactItem', [Controller\Items::class, 'redactItem'])->middleware('auth', 'admin');
 Route::add(['GET', 'POST'], '/redactScrab', [Controller\Scrabs::class, 'redactScrab'])->middleware('auth', 'admin');
