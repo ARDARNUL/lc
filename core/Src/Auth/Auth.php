@@ -3,6 +3,7 @@
 namespace Src\Auth;
 
 use Src\Session;
+use Firebase\JWT\JWT;
 
 class Auth
 {
@@ -64,6 +65,4 @@ class Auth
         Session::set('csrf_token', $token);
         return $token;
     }
-
-
 }

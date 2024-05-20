@@ -13,27 +13,35 @@ class Items
 
     public function viewItem(Request $request): void
     {
-        $Items = Item::all();
-        (new View())->json($Items->toArray());
+        if($Items = Item::all()){
+            (new View())->json(['message' => 'Успешно', "Items" => $Items->toArray()], 200);
+        }else{
+            (new View())->json(['message' => 'Непредвиденная ошибка'], 500);
+        }
     }
 
     public function createItem(Request $request): void
     {
         if ($Items = Item::create($request->all())) {
-            (new View())->json($Items->toArray());
+            (new View())->json(['message' => 'Успешно', "Items" => $Items->toArray()], 200);
+        }else{
+            (new View())->json(['message' => 'Непредвиденная ошибка'], 500);
         }
     }
 
     public function deleteItem(Request $request): void
     {
-        Item::where("id", $request->get('id'))->delete();
-        $Items = Item::all();
-        (new View())->json($Items->toArray());
+        if(Item::where("id", $request->get('id'))->delete()){
+            $Items = Item::all();
+            (new View())->json(['message' => 'Успешно', "Items" => $Items->toArray()], 200);
+        }else{
+            (new View())->json(['message' => 'Непредвиденная ошибка'], 500);
+        }
     }
 
     public function redactItem(Request $request): void
     {
-        Item::where("id", $request->get('id'))->update([
+        if(Item::where("id", $request->get('id'))->update([
             "name" => $request->get('name'),
             "avatar" => $request->get('avatar'),
             "type_id" => $request->get('type_id'),
@@ -41,9 +49,12 @@ class Items
             "weight" => $request->get('weight'),
             "presence_of_battery_id" => $request->get('presence_of_battery_id'),
             "conducts_electricity_id" => $request->get('conducts_electricity_id'),
-        ]);
-        $Items = Item::all(); 
-        (new View())->json($Items->toArray());
+        ])){
+            $Items = Item::all(); 
+            (new View())->json(['message' => 'Успешно', "Items" => $Items->toArray()], 200);
+        }else{
+            (new View())->json(['message' => 'Непредвиденная ошибка'], 500);
+        }
     }
 
 

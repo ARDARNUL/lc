@@ -15,8 +15,11 @@ class Monsters
 
     public function viewMonster(Request $request): void
     {
-        $Monsters = Monster::all();
-        (new View())->json($Monsters->toArray());
+        if($Monsters = Monster::all()){
+            (new View())->json(['message' => 'Успешно', "Monsters" => $Monsters->toArray()], 200);
+        }else{
+            (new View())->json(['message' => 'Непредвиденная ошибка'], 500);
+        }
     }
 
     public function createMonster(Request $request): void
@@ -28,9 +31,12 @@ class Monsters
 
     public function deleteMonster(Request $request): void
     {
-        Monster::where("id", $request->get('id'))->delete();
-        $Monsters = Monster::all();
-        (new View())->json($Monsters->toArray());
+        if(Monster::where("id", $request->get('id'))->delete()){
+            $Monsters = Monster::all();
+            (new View())->json(['message' => 'Успешно', "Monsters" => $Monsters->toArray()], 200);
+        }{
+            (new View())->json(['message' => 'Непредвиденная ошибка'], 500);
+        }
     }
 
     public function redactMonster(Request $request): void
@@ -60,9 +66,8 @@ class Monsters
                 "UPPER(name) LIKE '%" . $search . "%'"
             )->get();
         } else {
-                $Monsters = Monster::all();
+            (new View())->json(['message' => 'Вы нечего не ввели'], 400);
         }
         (new View())->json($Monsters->toArray());
     }
-
 }

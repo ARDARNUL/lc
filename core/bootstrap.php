@@ -2,12 +2,12 @@
 
 use Src\Response;
 
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: * ');
 header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
-// header('Access-Control-Expose-Headers: *');
-// header('Access-Control-Request-Headers: content-type,x-pingother');
-// header('Access-Control-Request-Method: POST, GET, OPTIONS, PUT, DELETE');
+header('Access-Control-Expose-Headers: *');
+header('Access-Control-Request-Headers: content-type,x-pingother');
+header('Access-Control-Request-Method: POST, GET, OPTIONS, PUT, DELETE');
 header('Content-Type: application/json');
 
 //Подключение автозагрузчика composer
