@@ -10,7 +10,6 @@ use Src\Auth\Auth;
 
 class Items
 {
-
     public function viewItem(Request $request): void
     {
         if($Items = Item::all()){
@@ -56,6 +55,4 @@ class Items
             (new View())->json(['message' => 'Непредвиденная ошибка'], 500);
         }
     }
-
-
 }

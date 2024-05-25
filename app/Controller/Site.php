@@ -17,45 +17,6 @@ class Site
 {
     private $upload_dir = __DIR__ . '/../../public/images/';
 
-    public function addImage(Request $request)
-    {
-        $Users = Auth::user(); 
-        // check avatar
-        if (isset($_FILES["avatar"])) {
-            $avatar = $_FILES["avatar"];
-            if (!$avatar['name']) {
-                return new View('site.signup', ['message' => 'Не выбрано изображение']);
-            }
-
-            if (!$avatar['size']) {
-                return new View('site.signup', ['message' => 'Слишком большое изображение']);
-            }
-
-            $getMime = explode('.', $avatar['name']);
-            $mime = strtolower(end($getMime));
-            $types = array('jpg', 'png', 'jpeg', 'webp');
-
-
-            if (!in_array($mime, $types)) {
-                return new View('site.signup', ['message' => 'Не поддерживаемый тип изображения']);
-            }
-
-            $name = mt_rand(0, 10000) . $avatar['name'];
-            copy($avatar['tmp_name'], "$this->upload_dir/$name");
-
-
-            
-        User::where("id", $request->get('id'))->update([
-            'avatar' => "/images/$name",
-            "avatar" => $request->get('avatar')     
-        ]);
-        }
-
-       
-        (new View())->json($Users->toArray());
-
-    }
-
     public function deleteUser(Request $request): void
     {
         $authHeader = $request->headers['Authorization'];
@@ -166,12 +127,12 @@ class Site
             if ($jwt->iss !== $serverName ||
                 $jwt->nbf > $now->getTimestamp() ||
                 $jwt->exp < $now->getTimestamp()) {
-                    (new View())->json(["message" => 'Выход успешен'], 200);
+                    (new View())->json(['message' => 'Выход успешен', 'token' => NULL], 200);
             }
             (new View())->json(['message' => 'Выход успешен', 'token' => NULL], 200);
         }
         else{
-            (new View())->json(["message" => 'Выход успешен'], 200);
+            (new View())->json(['message' => 'Выход успешен', 'token' => NULL], 200);
         }
     }
 
@@ -189,7 +150,6 @@ class Site
             if ($validator->fails()) {
                 (new View())->json($validator->errors(), 400);
             }
-    
 
             $login = $request->get('login');
     
@@ -205,7 +165,6 @@ class Site
                 ]);
                 
                 Auth::attempt($request->all());
-
                 $user = Auth::user();
 
                 $secret_Key  = '68V0zWFrS72GbpPreidkQFLfj4v9m3Ti+DXc8OB0gcM=';
@@ -220,17 +179,13 @@ class Site
                 'exp'  => $expire_at,                           // Expire
                 'info' => $info                   // User name
             ];
-    
                 $jwt = JWT::encode($request_data, '68V0zWFrS72GbpPreidkQFLfj4v9m3Ti+DXc8OB0gcM=', 'HS512');
-
                 (new View())->json(["message" => 'Успешно', "user" => $user->toArray(), 'token' => $jwt], 200); 
-                
             }
 
             if (!$info) {
                 (new View())->json(['message' => 'Не вышло)'], 400);
             }
-    
         }
     }
 }

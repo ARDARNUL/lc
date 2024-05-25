@@ -10,7 +10,6 @@ use Src\Auth\Auth;
 
 class Monsters
 {
-
     private $upload_dir = __DIR__ . '/../../public/images/';
 
     public function viewMonster(Request $request): void
@@ -25,7 +24,9 @@ class Monsters
     public function createMonster(Request $request): void
     {
         if ($Monsters = Monster::create($request->all())) {
-            (new View())->json($Monsters->toArray());
+            (new View())->json(['message' => 'Успешно', "Monsters" => $Monsters->toArray()], 200);
+        }else{
+            (new View())->json(['message' => 'Непредвиденная ошибка'], 500);
         }
     }
 
@@ -34,14 +35,14 @@ class Monsters
         if(Monster::where("id", $request->get('id'))->delete()){
             $Monsters = Monster::all();
             (new View())->json(['message' => 'Успешно', "Monsters" => $Monsters->toArray()], 200);
-        }{
+        }else {
             (new View())->json(['message' => 'Непредвиденная ошибка'], 500);
         }
     }
 
     public function redactMonster(Request $request): void
     {
-        Monster::where("id", $request->get('id'))->update([
+        if(Monster::where("id", $request->get('id'))->update([
             "name" => $request->get('name'),
             "avatar" => $request->get('avatar'),
             "healt" => $request->get('healt'),
@@ -49,10 +50,12 @@ class Monsters
             "quantity" => $request->get('quantity'),
             "stun_id" => $request->get('stun_id'),
             "moons_id" => $request->get('moons_id')
-        ]);
-        
-        $Monsters = Monster::all();
-        (new View())->json($Monsters->toArray());
+        ])){
+            $Monsters = Monster::all();
+            (new View())->json(['message' => 'Успешно', "Monsters" => $Monsters->toArray()], 200);
+        }else {
+            (new View())->json(['message' => 'Непредвиденная ошибка'], 500);
+        }
     }
 
     public function searchMonster(Request $request): void
@@ -68,6 +71,6 @@ class Monsters
         } else {
             (new View())->json(['message' => 'Вы нечего не ввели'], 400);
         }
-        (new View())->json($Monsters->toArray());
+        (new View())->json(['message' => 'Успешно', "Monsters" => $Monsters->toArray()], 200);
     }
 }
